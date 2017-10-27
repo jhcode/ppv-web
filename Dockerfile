@@ -11,6 +11,7 @@ RUN docker-php-ext-install pdo pdo_mysql gd
 
 RUN newrelic-install install
 COPY scripts/newrelic.ini /usr/local/etc/php/conf.d/
+COPY conf/php.ini /usr/local/etc/php/conf.d/
 
 WORKDIR /var/www/html/ppv-web
 
