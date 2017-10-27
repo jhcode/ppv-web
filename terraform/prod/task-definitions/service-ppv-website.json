@@ -1,0 +1,29 @@
+[
+  {
+    "name": "ppv-website",
+    "image": "780172389235.dkr.ecr.eu-west-1.amazonaws.com/ppv-website:latest",
+    "cpu": 200,
+    "memory": 80,
+    "essential": true,
+    "mountPoints": [
+      {
+        "sourceVolume": "ppv-website",
+        "containerPath": "/var/www/html/ppv-web"
+      }
+    ],
+    "hostname": "ppv-website",
+    "logConfiguration": {
+      "logDriver": "fluentd",
+      "options": {
+        "fluentd-address": "logs.prod.mettalloids.com:24224",
+        "tag": "docker.picogauge-website.prod"
+      }
+    },
+    "portMappings": [
+      {
+        "containerPort": 9000,
+        "hostPort": 8080
+      }
+    ]
+  }
+]

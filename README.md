@@ -1,0 +1,1 @@
+This is the Wordpress repository of the Peculiar People's Ventures main website.
