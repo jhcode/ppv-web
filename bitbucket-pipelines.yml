@@ -1,0 +1,22 @@
+image: mofesola/bitbucket-ecs-deploy
+options:
+  docker: true
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          - echo 'No test scripts defined yet. Proceeding to deploy'
+
+  branches:
+        master:
+          - step:
+              script:
+              - envsubst < ~/.aws/credentials.tmpl > ~/.aws/credentials
+              - envsubst < wp-config.php > wp-config2.php && mv wp-config2.php wp-config.php
+              - envsubst < scripts/newrelic.ini > scripts/newrelic2.ini && mv scripts/newrelic2.ini scripts/newrelic.ini
+              - conf/build.sh
+              - ecs deploy ppv-prod ppv-prod-website --timeout 120
+
