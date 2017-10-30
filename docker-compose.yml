@@ -1,0 +1,42 @@
+version: '2'
+services:
+
+  nginx:
+      build: nginx/.
+      networks:
+        - ppv-web
+      restart: unless-stopped
+      volumes:
+        - ppv-web:/var/www/html/ppv-web
+      ports:
+        - 8095:80
+  ppv-mysql:
+      image: mysql:5.7.13
+      container_name: ppv-mysql
+      volumes:
+        - mysql:/var/lib/mysql
+      env_file: .env
+      ports:
+        - "3308:3306"
+      networks:
+        - ppv-web
+
+  ppv-web:
+      build: .
+      networks:
+        - ppv-web
+      env_file: .env
+      restart: unless-stopped
+      volumes:
+        - ppv-web:/var/www/html/ppv-web
+      ports:
+        - 8080:9000
+
+volumes:
+  mysql:
+    driver: local
+  ppv-web:
+    driver: local
+
+networks:
+  ppv-web:
