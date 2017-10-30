@@ -17,4 +17,4 @@ pipelines:
               - envsubst < ~/.aws/credentials.tmpl > ~/.aws/credentials
               - envsubst < scripts/newrelic.ini > scripts/newrelic2.ini && mv scripts/newrelic2.ini scripts/newrelic.ini
               - conf/build.sh
-              - ecs deploy ppv-prod ppv-prod-website -e ppv-website DB_NAME ${DB_NAME} -e ppv-website DB_USER ${DB_USER} -e ppv-website DB_PASSWORD ${DB_PASSWORD} -e ppv-website DB_HOST ${DB_HOST}
+              - ecs deploy ppv-prod ppv-prod-website -e ppv-website DB_NAME ${DB_NAME} -e ppv-website DB_USER ${DB_USER} -e ppv-website DB_PASSWORD ${DB_PASSWORD} -e ppv-website DB_HOST ${DB_HOST}  --timeout 240 > /dev/null
