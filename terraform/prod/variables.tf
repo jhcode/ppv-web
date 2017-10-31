@@ -44,3 +44,11 @@ variable "env" {
   description = "The aws environment."
   default = "prod"
 }
+
+variable "project_name" {
+  default = "ppv"
+}
+
+variable "project_billing_id" {
+  default = "ppv"
+}
