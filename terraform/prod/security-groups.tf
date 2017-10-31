@@ -38,3 +38,19 @@ resource "aws_security_group" "ecs" {
     Name = "${var.project_name}-ecs-${var.env}"
   }
 }
+
+resource "aws_security_group" "internal" {
+  name = "${var.project_name}-internal-sg"
+  description = "${var.project_name} internal SG"
+
+  vpc_id = "${var.vpc_id}"
+}
+
+resource "aws_security_group_rule" "allow_all_out_from_ecs" {
+  type = "egress"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.internal.id}"
+}

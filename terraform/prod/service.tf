@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "main" {
 
   volume {
     name = "${var.project_name}-app"
-    host_path = "/ecs/${var.project_name}-app"
+    host_path = "/data/${var.project_name}-app"
   }
 }
 
@@ -38,17 +38,17 @@ resource "aws_ecs_task_definition" "app-nginx" {
 
   volume {
     name = "letsencrypt"
-    host_path = "/ecs/letsencrypt"
+    host_path = "/data/letsencrypt"
   }
 
   volume {
     name = "${var.project_name}-app"
-    host_path = "/ecs/${var.project_name}-app"
+    host_path = "/data/${var.project_name}-app"
   }
 
   volume {
     name      = "${var.project_name}-website"
-    host_path = "/ecs/${var.project_name}-website"
+    host_path = "/data/${var.project_name}-website"
   }
 }
 
@@ -77,7 +77,7 @@ resource "aws_ecs_task_definition" "app-website" {
 
   volume {
     name      = "${var.project_name}-website"
-    host_path = "/ecs/${var.project_name}-website"
+    host_path = "/data/${var.project_name}-website"
   }
 }
 

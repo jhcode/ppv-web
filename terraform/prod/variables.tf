@@ -52,3 +52,7 @@ variable "project_name" {
 variable "project_billing_id" {
   default = "ppv"
 }
+
+variable "subnets" {
+  default = "subnet-61f96b3a,subnet-03421d67,subnet-380f594e"
+}
