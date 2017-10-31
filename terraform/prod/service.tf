@@ -1,5 +1,5 @@
-resource "aws_ecs_task_definition" "ppv" {
-  family                = "picogauge-${var.env}"
+resource "aws_ecs_task_definition" "main" {
+  family                = "${var.project_name}-${var.env}"
   container_definitions = "${file("task-definitions/service.json")}"
 
   volume {
@@ -8,15 +8,15 @@ resource "aws_ecs_task_definition" "ppv" {
   }
 
   volume {
-    name = "ppv-app"
-    host_path = "/ecs/ppv-app"
+    name = "${var.project_name}-app"
+    host_path = "/ecs/${var.project_name}-app"
   }
 }
 
-resource "aws_ecs_service" "ppv" {
-  name            = "ppv-${var.env}-api"
-  cluster         = "${aws_ecs_cluster.ppv.id}"
-  task_definition = "${aws_ecs_task_definition.ppv.arn}"
+resource "aws_ecs_service" "main" {
+  name            = "${var.project_name}-${var.env}-api"
+  cluster         = "${aws_ecs_cluster.ecs_cluster.id}"
+  task_definition = "${aws_ecs_task_definition.main.arn}"
   desired_count   = 1
   deployment_minimum_healthy_percent = 0
   deployment_maximum_percent = 200
@@ -27,8 +27,8 @@ resource "aws_ecs_service" "ppv" {
   }
 }
 
-resource "aws_ecs_task_definition" "ppv-nginx" {
-  family                = "ppv-${var.env}-nginx"
+resource "aws_ecs_task_definition" "app-nginx" {
+  family                = "${var.project_name}-${var.env}-nginx"
   container_definitions = "${file("task-definitions/service-nginx.json")}"
 
   volume {
@@ -42,20 +42,20 @@ resource "aws_ecs_task_definition" "ppv-nginx" {
   }
 
   volume {
-    name = "ppv-app"
-    host_path = "/ecs/ppv-app"
+    name = "${var.project_name}-app"
+    host_path = "/ecs/${var.project_name}-app"
   }
 
   volume {
-    name      = "ppv-website"
-    host_path = "/ecs/ppv-website"
+    name      = "${var.project_name}-website"
+    host_path = "/ecs/${var.project_name}-website"
   }
 }
 
-resource "aws_ecs_service" "ppv-nginx" {
-  name            = "ppv-${var.env}-nginx"
-  cluster         = "${aws_ecs_cluster.ppv.id}"
-  task_definition = "${aws_ecs_task_definition.ppv-nginx.arn}"
+resource "aws_ecs_service" "app-nginx" {
+  name            = "${var.project_name}-${var.env}-nginx"
+  cluster         = "${aws_ecs_cluster.ecs_cluster.id}"
+  task_definition = "${aws_ecs_task_definition.app-nginx.arn}"
   desired_count   = 1
   deployment_minimum_healthy_percent = 0
   deployment_maximum_percent = 200
@@ -66,25 +66,25 @@ resource "aws_ecs_service" "ppv-nginx" {
   }
 }
 
-resource "aws_ecs_task_definition" "ppv-website" {
-  family                = "ppv-${var.env}-website"
-  container_definitions = "${file("task-definitions/service-ppv-website.json")}"
+resource "aws_ecs_task_definition" "app-website" {
+  family                = "${var.project_name}-${var.env}-website"
+  container_definitions = "${file("task-definitions/service-app-website.json")}"
 
   volume {
     name      = "service-storage"
-    host_path = "/ecs/service-storage/ppv-website"
+    host_path = "/ecs/service-storage/${var.project_name}-website"
   }
 
   volume {
-    name      = "ppv-website"
-    host_path = "/ecs/ppv-website"
+    name      = "${var.project_name}-website"
+    host_path = "/ecs/${var.project_name}-website"
   }
 }
 
-resource "aws_ecs_service" "ppv-website" {
-  name            = "ppv-${var.env}-website"
-  cluster         = "${aws_ecs_cluster.ppv.id}"
-  task_definition = "${aws_ecs_task_definition.ppv-website.arn}"
+resource "aws_ecs_service" "app-website" {
+  name            = "${var.project_name}-${var.env}-website"
+  cluster         = "${aws_ecs_cluster.ecs_cluster.id}"
+  task_definition = "${aws_ecs_task_definition.app-website.arn}"
   desired_count   = 1
   deployment_minimum_healthy_percent = 0
   deployment_maximum_percent = 200

@@ -2,7 +2,7 @@
  * Provides internal access to container ports
  */
 resource "aws_security_group" "ecs" {
-  name = "ppv-ecs-sg"
+  name = "${var.project_name}-ecs-sg"
   description = "Container Instance Allowed Ports"
   vpc_id = "${var.vpc_id}"
 
@@ -35,6 +35,6 @@ resource "aws_security_group" "ecs" {
   }
 
   tags {
-    Name = "ppv-ecs-${var.env}"
+    Name = "${var.project_name}-ecs-${var.env}"
   }
 }
