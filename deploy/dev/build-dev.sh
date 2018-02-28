@@ -6,7 +6,7 @@ eval $(aws ecr get-login --no-include-email --region ${AWS_REGION})
 
 
 ##############################################
-## PECULIAR-WP-APP
+## PECULIAR-PPV-APP
 ##############################################
 
 docker build -t peculiar-ppv-dev .
