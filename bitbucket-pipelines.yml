@@ -11,10 +11,16 @@ pipelines:
           - echo 'No test scripts defined yet. Proceeding to deploy'
 
   branches:
+        develop:
+          - step:
+              script:
+              - source deploy/dev/export-dev.sh
+              - deploy/dev/build-dev.sh
+              - deploy/dev/deploy-dev.sh
+
         master:
           - step:
               script:
-              - envsubst < ~/.aws/credentials.tmpl > ~/.aws/credentials
-              - envsubst < scripts/newrelic.ini > scripts/newrelic2.ini && mv scripts/newrelic2.ini scripts/newrelic.ini
-              - conf/build.sh
-              - ecs deploy ppv-prod ppv-prod-website -e ppv-website DB_NAME ${DB_NAME} -e ppv-website DB_USER ${DB_USER} -e ppv-website DB_PASSWORD ${DB_PASSWORD} -e ppv-website DB_HOST ${DB_HOST}  --timeout 240 > /dev/null
+              - source deploy/prod/export-prod.sh
+              - deploy/prod/build-prod.sh
+              - deploy/prod/deploy-prod.sh
