@@ -3,6 +3,7 @@ services:
 
   nginx:
       build: nginx/.
+      container_name: peculiar-ppv-nginx
       networks:
         - ppv-web
       restart: unless-stopped
@@ -23,6 +24,7 @@ services:
 
   ppv-web:
       build: .
+      container_name: peculiar-ppv
       networks:
         - ppv-web
       env_file: .env
