@@ -100,3 +100,5 @@ define('FORCE_SSL_ADMIN', true);
 
 /* Turn HTTPS 'on' if HTTP_X_FORWARDED_PROTO matches 'https' */
 if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+    $_SERVER['HTTPS'] = 'on';
+}
