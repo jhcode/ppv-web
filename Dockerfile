@@ -1,5 +1,5 @@
 FROM wordpress:php7.0-fpm
-LABEL maintainer Mofesola BABALOLA <mofesolababalola@mettalloids.com>
+LABEL Maintainer BABAJIDE Hassan <jide2002003@gmail.com>
 
 RUN apt update && apt install -y wget
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
