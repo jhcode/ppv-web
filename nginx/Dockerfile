@@ -1,5 +1,5 @@
 FROM nginx:1.13.5
-LABEL Maintainer Mettalloids Developers <devops@mettalloids.com>
+LABEL Maintainer BABAJIDE Hassan <jide2002003@gmail.com>
 
 COPY conf/ /etc/nginx/conf.d/
 RUN rm /etc/nginx/conf.d/default.conf
